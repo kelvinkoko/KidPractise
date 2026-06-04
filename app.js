@@ -305,7 +305,7 @@
   /* ----- celebration ---------------------------------------------------- */
   function celebrate() {
     el("winLevelName").textContent = state.name ? `“${state.name}” complete!` : "";
-    el("winOverlay").hidden = false;
+    el("winOverlay").classList.add("show");
     confetti();
   }
 
@@ -389,11 +389,11 @@
     });
 
     el("nextBtn").addEventListener("click", () => {
-      el("winOverlay").hidden = true;
+      el("winOverlay").classList.remove("show");
       nextPuzzle();
     });
     el("playAgainBtn").addEventListener("click", () => {
-      el("winOverlay").hidden = true;
+      el("winOverlay").classList.remove("show");
       restartCurrent();
     });
 
