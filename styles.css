@@ -1,0 +1,211 @@
+/* ===========================================================================
+ * styles.css — kid-friendly, big-touch-targets, responsive
+ * ========================================================================= */
+:root {
+  --bg: #f3f9ff;
+  --panel: #ffffff;
+  --ink: #2b2d42;
+  --accent: #4d96ff;
+  --fun: #ff5a5f;
+  --soft: #e9eefb;
+  --cell-line: #e6e9f5;
+  --radius: 18px;
+  --shadow: 0 6px 18px rgba(40, 60, 120, .12);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Comic Sans MS", "Baloo 2", "Segoe UI", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.topbar {
+  text-align: center;
+  padding: 14px 12px 4px;
+}
+.topbar h1 { margin: 0; font-size: clamp(24px, 5vw, 40px); }
+.tagline { margin: 4px 0 0; color: #6b7280; font-size: clamp(13px, 2.6vw, 17px); }
+
+/* ---- controls ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px;
+}
+.control-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform .08s ease, filter .12s ease;
+}
+.btn:active { transform: translateY(1px) scale(.97); }
+.btn-fun  { background: var(--fun);   color: #fff; }
+.btn-soft { background: var(--soft);  color: var(--ink); }
+.btn-level { background: #fff; color: var(--ink); border: 2px solid var(--soft); }
+.btn-level.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+.size-pick { font-weight: 700; display: flex; align-items: center; gap: 6px; }
+#sizeSelect {
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  padding: 8px 10px; border-radius: 12px; border: 2px solid var(--soft);
+  background: #fff; color: var(--ink);
+}
+
+/* ---- play area ---- */
+.play-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px 12px;
+}
+.panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+}
+.panel h2, .tray-wrap h2 {
+  margin: 2px 4px 10px;
+  font-size: clamp(16px, 3vw, 22px);
+}
+.hint-text { font-size: 13px; color: #8a93a6; font-weight: 400; }
+
+/* ---- grids ---- */
+.grid {
+  display: grid;
+  gap: 3px;
+  background: var(--cell-line);
+  border-radius: 12px;
+  padding: 3px;
+  width: min(86vw, 360px);
+  aspect-ratio: 1 / 1;
+}
+.target { width: min(60vw, 240px); }
+
+.cell {
+  position: relative;
+  background: var(--cream);
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+.board .cell { background: #fbfdff; outline: 2px dashed transparent; }
+.board .cell.empty { background: repeating-linear-gradient(45deg, #fbfdff, #fbfdff 8px, #f1f5ff 8px, #f1f5ff 16px); }
+.board .cell.drop-hover { outline: 3px solid var(--accent); outline-offset: -3px; }
+.board .cell.correct::after {
+  content: "✓";
+  position: absolute; top: 2px; right: 4px;
+  font-size: 12px; color: #1c9c4d; font-weight: 900;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff;
+}
+
+/* ghost overlay for "peek" */
+.cell .peek-ghost { position: absolute; inset: 0; opacity: .28; pointer-events: none; }
+
+/* ---- piece tile ---- */
+.tile {
+  width: 100%; height: 100%;
+  display: block;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.tile.dragging-src { opacity: .25; }
+.tile.pop { animation: pop .22s ease; }
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+.tile svg { width: 100%; height: 100%; display: block; }
+
+/* ---- tray ---- */
+.tray-wrap { padding: 6px 12px 28px; text-align: center; }
+.tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  min-height: 90px;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin: 0 auto;
+  max-width: 720px;
+}
+.tray.drop-hover { outline: 3px solid var(--accent); outline-offset: -3px; }
+.tray .tile {
+  width: 64px; height: 64px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(40,60,120,.18);
+}
+.tray-empty { color: #9aa3b5; font-weight: 700; }
+
+/* ---- drag layer ---- */
+.drag-layer { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+.drag-clone {
+  position: fixed;
+  width: 72px; height: 72px;
+  margin: -36px 0 0 -36px;
+  border-radius: 8px;
+  box-shadow: 0 10px 22px rgba(40,60,120,.35);
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+/* ---- win overlay ---- */
+.win-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(20, 30, 60, .45);
+  display: flex; align-items: center; justify-content: center;
+  animation: fade .2s ease;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.win-card {
+  background: #fff; border-radius: 24px; padding: 28px 34px; text-align: center;
+  box-shadow: 0 20px 60px rgba(20,30,60,.4);
+  animation: popin .35s cubic-bezier(.2,1.3,.5,1);
+}
+@keyframes popin { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.win-emoji { font-size: 64px; animation: wiggle 1s ease infinite; }
+@keyframes wiggle { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+.win-card h2 { margin: 6px 0; font-size: 30px; }
+.win-actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+
+/* confetti bits */
+.confetti {
+  position: fixed; top: -12px; width: 10px; height: 14px;
+  z-index: 99; border-radius: 2px; pointer-events: none;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: .9; }
+}
+
+@media (max-width: 540px) {
+  .grid { width: min(92vw, 340px); }
+  .target { width: min(46vw, 200px); }
+  .tray .tile { width: 56px; height: 56px; }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Triangle Squares — Shape Builder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🔺🟦 Triangle Squares</h1>
+    <p class="tagline">Drag the pieces and tap to spin them — build the picture!</p>
+  </header>
+
+  <nav class="controls">
+    <div class="control-group" id="levelButtons" aria-label="Choose a puzzle"></div>
+    <div class="control-group">
+      <label class="size-pick">
+        Size
+        <select id="sizeSelect">
+          <option value="2">2 × 2</option>
+          <option value="3" selected>3 × 3</option>
+          <option value="4">4 × 4</option>
+        </select>
+      </label>
+      <button id="surpriseBtn" class="btn btn-fun">🎲 Surprise</button>
+      <button id="peekBtn" class="btn btn-soft" aria-pressed="false">👀 Peek</button>
+      <button id="resetBtn" class="btn btn-soft">↺ Reset</button>
+    </div>
+  </nav>
+
+  <main class="play-area">
+    <section class="panel">
+      <h2>Make this!</h2>
+      <div id="targetGrid" class="grid target" aria-label="Target picture"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Your work</h2>
+      <div id="boardGrid" class="grid board" aria-label="Your board"></div>
+    </section>
+  </main>
+
+  <section class="tray-wrap">
+    <h2>Pieces <span class="hint-text">(drag onto the board • tap to spin)</span></h2>
+    <div id="tray" class="tray" aria-label="Pieces tray"></div>
+  </section>
+
+  <!-- Win celebration overlay -->
+  <div id="winOverlay" class="win-overlay" hidden>
+    <div class="win-card">
+      <div class="win-emoji">🎉</div>
+      <h2>You did it!</h2>
+      <p id="winLevelName"></p>
+      <div class="win-actions">
+        <button id="nextBtn" class="btn btn-fun">Next puzzle →</button>
+        <button id="playAgainBtn" class="btn btn-soft">Play again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating drag layer -->
+  <div id="dragLayer" class="drag-layer" aria-hidden="true"></div>
+
+  <script src="levels.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
