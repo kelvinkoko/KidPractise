@@ -10,7 +10,7 @@ picture out of square pieces. Each piece is a square split along a diagonal into
 1. Look at the **“Make this!”** picture on the left.
 2. **Drag** a piece from the tray at the bottom onto a square on your board.
 3. **Tap** a piece to spin it a quarter-turn until the colours line up.
-4. A small ✓ appears on each square that's correct. Match them all to win! 🎉
+4. Match the whole picture to win! 🎉
 
 ### Helpers & buttons
 

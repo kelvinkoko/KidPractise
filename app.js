@@ -131,7 +131,6 @@
         tile.dataset.pieceId = piece.id;
         tile.innerHTML = tileSVG(piece);
         cell.appendChild(tile);
-        if (sameLook(piece, target)) cell.classList.add("correct");
       }
       node.appendChild(cell);
     });

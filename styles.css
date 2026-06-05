@@ -111,12 +111,6 @@ html, body {
 .board .cell { background: #fbfdff; outline: 2px dashed transparent; }
 .board .cell.empty { background: repeating-linear-gradient(45deg, #fbfdff, #fbfdff 8px, #f1f5ff 8px, #f1f5ff 16px); }
 .board .cell.drop-hover { outline: 3px solid var(--accent); outline-offset: -3px; }
-.board .cell.correct::after {
-  content: "✓";
-  position: absolute; top: 2px; right: 4px;
-  font-size: 12px; color: #1c9c4d; font-weight: 900;
-  text-shadow: 0 0 3px #fff, 0 0 3px #fff;
-}
 
 /* ghost overlay for "peek" */
 .cell .peek-ghost { position: absolute; inset: 0; opacity: .28; pointer-events: none; }
