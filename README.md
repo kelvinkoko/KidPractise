@@ -42,11 +42,47 @@ Works with **mouse and touch** (phones/tablets), with big tap targets.
   (one piece per filled cell, randomly rotated), so every puzzle is guaranteed
   solvable — including the randomly generated **Surprise** ones.
 
+## 🏎️ RC Track Lane Editor
+
+A separate little tool for **drawing RC track lanes** by dropping control
+points — the tool joins them into a smooth **multi-segment Bézier curve** made
+of straights and curves. Open `track-editor.html` in any browser (no build, no
+dependencies).
+
+### How to draw
+
+1. In **Add points** mode, click on the canvas to lay the racing line. Each
+   click drops a control point and the tool auto-fits smooth Bézier handles
+   through all the points.
+2. Switch to **Edit** to drag the anchor points (●) and their Bézier handles
+   (○) to shape each curve exactly.
+3. **Smooth / Corner** — a smooth node keeps its two handles mirror-symmetric
+   (rounded bends); a corner node lets them move independently (sharp turns).
+4. **Straight to next** — flattens the segment after the selected point into a
+   straight.
+5. **Closed loop** joins the last point back to the first (for oval/circuit
+   tracks); **Width** sets the lane thickness; **Snap to grid** aligns points.
+6. **Export** the track as **JSON** (control points), an **SVG path** `d`
+   string, a list of **sampled points** (evenly-spaced coordinates for driving
+   a marker along the lane), or a standalone **SVG file**.
+
+### How it works
+
+- The lane is a chain of nodes; between two nodes A → B the tool draws a cubic
+  Bézier using A's *out* handle and B's *in* handle. A fresh point's handles
+  are auto-derived from its neighbours (Catmull-Rom → Bézier), so a few clicks
+  already give a flowing line (`track-editor.js → recomputeAuto`).
+- The asphalt ribbon is drawn by sampling every segment, offsetting each sample
+  along its normal by ±½ width, and filling between the two edges.
+
 ## Files
 
-| File         | Purpose                                            |
-|--------------|----------------------------------------------------|
-| `index.html` | Page structure                                     |
-| `styles.css` | Kid-friendly styling, responsive layout, animations|
-| `levels.js`  | Colours, hand-made levels, random generator        |
-| `app.js`     | Game state, rendering, drag & tap-to-rotate logic  |
+| File                | Purpose                                            |
+|---------------------|----------------------------------------------------|
+| `index.html`        | Shape-builder game page structure                  |
+| `styles.css`        | Kid-friendly styling, responsive layout, animations|
+| `levels.js`         | Colours, hand-made levels, random generator        |
+| `app.js`            | Game state, rendering, drag & tap-to-rotate logic  |
+| `track-editor.html` | RC track lane editor page                          |
+| `track-editor.css`  | Editor styling                                     |
+| `track-editor.js`   | Bézier track model, canvas rendering, export       |

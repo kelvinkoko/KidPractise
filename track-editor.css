@@ -1,0 +1,142 @@
+/* ===========================================================================
+ * track-editor.css — RC track lane editor UI
+ * Standalone tool; shares the friendly look of the main app but self-contained.
+ * ========================================================================= */
+:root {
+  --te-bg: #eef4fb;
+  --te-panel: #ffffff;
+  --te-ink: #24303f;
+  --te-accent: #4d96ff;
+  --te-fun: #ff5a5f;
+  --te-soft: #e9eefb;
+  --te-danger: #e5484d;
+  --te-line: #d8e0ee;
+  --te-radius: 14px;
+  --te-shadow: 0 6px 18px rgba(40, 60, 120, .14);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--te-bg);
+  color: var(--te-ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ---- header ---- */
+.te-topbar { text-align: center; padding: 12px 12px 2px; }
+.te-topbar h1 { margin: 0; font-size: clamp(20px, 4vw, 32px); }
+.te-tagline {
+  margin: 4px auto 0; max-width: 720px;
+  color: #647089; font-size: clamp(12px, 2.4vw, 15px); line-height: 1.35;
+}
+
+/* ---- toolbar ---- */
+.te-toolbar {
+  display: flex; flex-wrap: wrap; gap: 8px 14px;
+  justify-content: center; align-items: center;
+  padding: 10px 12px;
+}
+.te-group {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  background: var(--te-panel);
+  padding: 6px 8px; border-radius: var(--te-radius);
+  box-shadow: var(--te-shadow);
+}
+
+.te-btn {
+  font: inherit; font-size: 14px; font-weight: 600;
+  border: none; border-radius: 10px;
+  padding: 8px 12px; cursor: pointer;
+  background: var(--te-accent); color: #fff;
+  transition: transform .06s ease, filter .15s ease, background .15s ease;
+  white-space: nowrap;
+}
+.te-btn:hover:not(:disabled) { filter: brightness(1.05); }
+.te-btn:active:not(:disabled) { transform: translateY(1px); }
+.te-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.te-soft { background: var(--te-soft); color: #3a4a63; }
+.te-fun  { background: var(--te-fun); }
+.te-danger { background: var(--te-danger); }
+
+.te-toggle { background: var(--te-soft); color: #3a4a63; }
+.te-toggle.is-on { background: var(--te-accent); color: #fff; }
+
+.te-slider { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #46536b; }
+.te-slider input[type="range"] { width: 110px; }
+.te-slider span { min-width: 26px; text-align: right; font-variant-numeric: tabular-nums; }
+
+.te-check { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #46536b; }
+
+/* ---- stage ---- */
+.te-stage {
+  flex: 1;
+  display: flex; flex-direction: column;
+  padding: 0 12px 12px;
+  min-height: 0;
+}
+.te-canvas {
+  flex: 1;
+  width: 100%;
+  min-height: 320px;
+  background: var(--te-panel);
+  border-radius: var(--te-radius);
+  box-shadow: var(--te-shadow);
+  touch-action: none;   /* we handle all pointer gestures ourselves */
+  cursor: crosshair;
+  display: block;
+}
+.te-hint {
+  margin: 8px 4px 0; text-align: center;
+  color: #647089; font-size: 12.5px;
+}
+
+/* ---- export overlay ---- */
+.te-overlay {
+  position: fixed; inset: 0;
+  background: rgba(24, 34, 52, .5);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; z-index: 50;
+}
+.te-overlay[hidden] { display: none; }
+.te-card {
+  background: var(--te-panel); border-radius: var(--te-radius);
+  box-shadow: var(--te-shadow);
+  width: min(720px, 100%); max-height: 90vh;
+  display: flex; flex-direction: column;
+  padding: 16px;
+}
+.te-card-head { display: flex; align-items: center; justify-content: space-between; }
+.te-card-head h2 { margin: 0; font-size: 20px; }
+
+.te-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 8px; }
+.te-tab {
+  font: inherit; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--te-line); border-radius: 8px;
+  padding: 6px 10px; cursor: pointer;
+  background: #f5f8fd; color: #46536b;
+}
+.te-tab.is-on { background: var(--te-accent); color: #fff; border-color: var(--te-accent); }
+
+.te-out {
+  width: 100%; min-height: 220px; resize: vertical;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12.5px; line-height: 1.45;
+  border: 1px solid var(--te-line); border-radius: 10px;
+  padding: 10px; background: #fbfcfe; color: #24303f;
+}
+.te-card-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.te-copymsg { color: #2ca24a; font-size: 13px; font-weight: 600; }
+
+@media (max-width: 560px) {
+  .te-slider input[type="range"] { width: 80px; }
+  .te-btn { padding: 8px 10px; font-size: 13px; }
+}

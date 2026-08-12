@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>RC Track Lane Editor</title>
+  <link rel="stylesheet" href="track-editor.css?v=1" />
+</head>
+<body>
+  <header class="te-topbar">
+    <h1>🏎️ RC Track Lane Editor</h1>
+    <p class="te-tagline">
+      Click to drop control points — the tool joins them into a smooth
+      multi-segment Bézier lane. Drag points &amp; handles to shape the curves.
+    </p>
+  </header>
+
+  <nav class="te-toolbar" aria-label="Tools">
+    <div class="te-group" role="group" aria-label="Mode">
+      <button id="modeAdd" class="te-btn te-toggle is-on">✏️ Add points</button>
+      <button id="modeEdit" class="te-btn te-toggle">✋ Edit</button>
+    </div>
+
+    <div class="te-group" role="group" aria-label="Selected point">
+      <button id="smoothBtn" class="te-btn" disabled>🌊 Smooth</button>
+      <button id="cornerBtn" class="te-btn" disabled>📐 Corner</button>
+      <button id="straightBtn" class="te-btn" disabled>➖ Straight to next</button>
+      <button id="deleteBtn" class="te-btn te-danger" disabled>🗑️ Delete point</button>
+    </div>
+
+    <div class="te-group" role="group" aria-label="Track">
+      <button id="closeBtn" class="te-btn te-toggle">🔁 Closed loop</button>
+      <label class="te-slider">
+        Width <input id="widthRange" type="range" min="10" max="160" value="64" />
+        <span id="widthVal">64</span>
+      </label>
+      <label class="te-check">
+        <input id="snapChk" type="checkbox" /> Snap to grid
+      </label>
+    </div>
+
+    <div class="te-group" role="group" aria-label="File">
+      <button id="undoBtn" class="te-btn" disabled>↶ Undo</button>
+      <button id="clearBtn" class="te-btn te-soft">🧹 Clear</button>
+      <button id="sampleBtn" class="te-btn te-soft">🎯 Sample track</button>
+      <button id="exportBtn" class="te-btn te-fun">⬇️ Export</button>
+    </div>
+  </nav>
+
+  <main class="te-stage">
+    <canvas id="canvas" class="te-canvas" aria-label="Track drawing surface"></canvas>
+    <p class="te-hint" id="hint">
+      Tip: In <b>Add points</b> mode, click on the canvas to lay the racing line.
+      Switch to <b>Edit</b> to drag points (●) and Bézier handles (○).
+    </p>
+  </main>
+
+  <!-- Export dialog -->
+  <div id="exportOverlay" class="te-overlay" hidden>
+    <div class="te-card">
+      <div class="te-card-head">
+        <h2>Export track</h2>
+        <button id="exportClose" class="te-btn te-soft" aria-label="Close">✕</button>
+      </div>
+      <div class="te-tabs" role="tablist">
+        <button class="te-tab is-on" data-tab="json">JSON</button>
+        <button class="te-tab" data-tab="svgpath">SVG path</button>
+        <button class="te-tab" data-tab="points">Sampled points</button>
+        <button class="te-tab" data-tab="svgfile">SVG file</button>
+      </div>
+      <textarea id="exportText" class="te-out" spellcheck="false" readonly></textarea>
+      <div class="te-card-actions">
+        <button id="copyBtn" class="te-btn te-fun">📋 Copy</button>
+        <button id="downloadBtn" class="te-btn te-soft">💾 Download</button>
+        <span id="copyMsg" class="te-copymsg" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="track-editor.js?v=1"></script>
+</body>
+</html>
